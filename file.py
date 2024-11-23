@@ -3,6 +3,7 @@ import winreg
 import os
 import psutil
 import threading
+import sys
 
 
 
@@ -17,7 +18,7 @@ class Dispatcher:
             
         try:
             with winreg.OpenKeyEx(registry_path, key_path, 0, winreg.KEY_WRITE) as registry_key:
-                winreg.SetValueEx(registry_key, self.program_name, 0, winreg.REG_SZ, __file__)
+                winreg.SetValueEx(registry_key, self.program_name, 0, winreg.REG_SZ, os.path.dirname(sys.executable))
             self.reboot(time=False)
             
         except PermissionError:
