@@ -10,7 +10,7 @@ import sys
 class Dispatcher:
     def __init__(self, program_name: str) -> None:
         self.program_name = program_name
-        self.path_file = rf'{os.path.dirname(sys.executable)} + r\file.exe'
+        self.path_file = rf'{os.path.dirname(sys.executable)}\file.exe'
         
     def add_to_startup(self) -> None:
         registry_path = winreg.HKEY_CURRENT_USER
@@ -94,6 +94,7 @@ def main() -> None:
 
 if __name__ == '__main__':
     main()
+    
         
     
     
