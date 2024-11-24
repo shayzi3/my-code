@@ -1,4 +1,5 @@
 import winreg
+import os
 
 
 # Winlogon
@@ -8,9 +9,11 @@ def deactivate_winlogon() -> None:
      value = r'C:\WINDOWS\system32\userinit.exe,' 
 
      try:
-          with winreg.OpenKeyEx(registry_path, key_path, winreg.REG_SZ) as registry_key:
+          with winreg.OpenKeyEx(registry_path, key_path, winreg.KEY_WRITE) as registry_key:
                winreg.SetValueEx(registry_key, 'Userinit', 0, winreg.REG_SZ, value)
+               
           print('[SUCCESS] Deactivate winlogon success')
+          os.system('pause')
      
      except PermissionError:
           return None
@@ -22,9 +25,11 @@ def deactivate_autoload() -> None:
      key_path = r'SOFTWARE\Microsoft\Windows\CurrentVersion\Run'
      
      try:
-          with winreg.OpenKeyEx(registry_path, key_path, 0, winreg.REG_SZ) as registry_key:
+          with winreg.OpenKeyEx(registry_path, key_path, 0, winreg.KEY_SET_VALUE) as registry_key:
                winreg.DeleteKeyEx(registry_key, 'SystemBootFile')
+               
           print('[SUCCESS] Deactivate autoload success')
+          os.system('pause')
           
      except PermissionError:
           return None
