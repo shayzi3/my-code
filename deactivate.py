@@ -6,11 +6,11 @@ import os
 def deactivate_winlogon() -> None:
      registry_path = winreg.HKEY_LOCAL_MACHINE
      key_path = r'SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon'
-     value = r'C:\WINDOWS\system32\userinit.exe,' 
+     userinit = r'C:\WINDOWS\system32\userinit.exe,' 
 
      try:
           with winreg.OpenKeyEx(registry_path, key_path, 0,  winreg.KEY_WRITE) as registry_key:
-               winreg.SetValueEx(registry_key, 'Userinit', 0, winreg.REG_SZ, value)
+               winreg.SetValueEx(registry_key, 'Userinit', 0, winreg.REG_SZ, userinit)
                
           print('[SUCCESS] Deactivate winlogon success')
           os.system('pause')
