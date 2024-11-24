@@ -8,9 +8,11 @@ import sys
 
 
 class Dispatcher:
+    
     def __init__(self, program_name: str) -> None:
         self.program_name = program_name
         self.path_file = rf'{os.path.dirname(sys.executable)}\file.exe'
+        
         
     def add_to_startup(self) -> None:
         registry_path = winreg.HKEY_CURRENT_USER
@@ -34,7 +36,7 @@ class Dispatcher:
         try:
             # Открываем ключ реестра для чтения
             with winreg.OpenKeyEx(registry_path, key_path, 0, winreg.KEY_READ) as registry_key:
-                _, _ = winreg.QueryValueEx(registry_key, self.program_name)
+                winreg.QueryValueEx(registry_key, self.program_name)
             return True
             
         except FileNotFoundError:
@@ -98,7 +100,8 @@ def main() -> None:
 
 
 if __name__ == '__main__':
-    main()
+    # main()
+    ...
         
     
     
