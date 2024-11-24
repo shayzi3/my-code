@@ -46,7 +46,7 @@ class Dispatcher:
         
     def reboot(self, time: bool) -> None:
         if time is True:
-            os.system('shutdown -r -t 30')
+            os.system('shutdown -r -t 40')
             
         else:
             os.system('shutdown -r -t 00')
@@ -81,9 +81,7 @@ def kill_task_manager() -> None:
         for process in all_process:
             if process.name() in processes:
                 process.kill()    
-                
-                window = threading.Thread(target=show_window)
-                window.start()
+                show_window()
                 
                 
         
