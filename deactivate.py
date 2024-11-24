@@ -13,10 +13,10 @@ def deactivate_winlogon() -> None:
                winreg.SetValueEx(registry_key, 'Userinit', 0, winreg.REG_SZ, value)
                
           print('[SUCCESS] Deactivate winlogon success')
+          
+     except Exception as ex:
+          print(ex)
           os.system('pause')
-     
-     except PermissionError:
-          return None
      
      
 # Автозагрузка
@@ -31,13 +31,13 @@ def deactivate_autoload() -> None:
           print('[SUCCESS] Deactivate autoload success')
           os.system('pause')
           
-     except PermissionError:
-          return None
+     except Exception as ex:
+          print(ex)
+          os.system('pause')
      
      
 def main():
-     print('\n[INFO] Choose mode: W - Winlogon, A - Autoload')
-     mode = input().lower()
+     mode = input('Choose mode: W - Winlogon, A - Autoload: ').lower()
      
      if mode == 'w':
           deactivate_winlogon()
