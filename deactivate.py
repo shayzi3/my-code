@@ -9,14 +9,16 @@ def deactivate_winlogon() -> None:
      value = r'C:\WINDOWS\system32\userinit.exe,' 
 
      try:
-          with winreg.OpenKeyEx(registry_path, key_path, winreg.KEY_WRITE) as registry_key:
+          with winreg.OpenKeyEx(registry_path, key_path, 0,  winreg.KEY_WRITE) as registry_key:
                winreg.SetValueEx(registry_key, 'Userinit', 0, winreg.REG_SZ, value)
                
           print('[SUCCESS] Deactivate winlogon success')
+          os.system('pause')
           
      except Exception as ex:
           print(ex)
           os.system('pause')
+          
      
      
 # Автозагрузка
@@ -25,8 +27,8 @@ def deactivate_autoload() -> None:
      key_path = r'SOFTWARE\Microsoft\Windows\CurrentVersion\Run'
      
      try:
-          with winreg.OpenKeyEx(registry_path, key_path, 0, winreg.KEY_SET_VALUE) as registry_key:
-               winreg.DeleteKeyEx(registry_key, 'SystemBootFile')
+          with winreg.OpenKeyEx(registry_path, key_path, 0, winreg.KEY_WRITE) as registry_key:
+               winreg.SetValueEx(registry_key, 'SystemBootFile', 0, winreg.REG_SZ, 'explorer.exe')
                
           print('[SUCCESS] Deactivate autoload success')
           os.system('pause')
